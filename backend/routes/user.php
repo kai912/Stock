@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\StockFoodController;
 
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\Auth\AuthenticatedSessionController;
@@ -29,6 +31,22 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('user.dashboard');
 })->middleware(['auth:users'])->name('dashboard');
+
+Route::middleware('auth:users')->group(function () {
+    
+    Route::get('/stocks/{id}/stock_foods', [StockFoodController::class, 'index'])->name('stock_foods.index');
+
+    Route::get('/stocks/create', [StockController::class, 'showCreateForm'])->name('stocks.create');
+    Route::post('/stocks/create', [StockController::class, 'create']);
+
+    Route::get('/stocks/{id}/stock_foods/create',[StockFoodController::class, 'showCreateForm'])->name('stock_foods.create');
+    Route::post('/stocks/{id}/stock_foods/create',[StockFoodController::class, 'create']);
+
+    Route::delete('/stocks/{id}/stock_foods/{stock_food_id}', [StockFoodController::class, 'destroy'])->name('stock_foods.destroy');
+
+    Route::get('/stocks/{id}/stock_foods/gacha', [StockFoodController::class, 'gacha'])->name('stock_foods.gacha');
+
+});
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
     ->middleware('guest')
