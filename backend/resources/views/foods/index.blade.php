@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto max-w-screen-xl md:px-10">
-        <div class="grid sm:grid-cols-3 gap-4">
+        <div class="grid sm:grid-cols-3 gap-4 items-start">
             <div class="pb-4 shadow-lg rounded-lg">
                 <nav>
                 <div class="flex justify-between bg-gray-50 bg-opacity-50 w-full border-b-2 border-gray-200 text-gray-400 font-bold lg:text-xl">

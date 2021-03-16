@@ -17,7 +17,11 @@ class StockFoodController extends Controller
 
         $current_stock = Stock::find($id);
 
-        $stock_foods = $current_stock->stock_foods()->get();
+        $stock_foods = $current_stock->stock_foods()
+                    ->leftJoin('foods', 'stock_foods.food_id', '=', 'foods.id')
+                    ->select(['stock_foods.id as stock_food_id','food_id','count', 'register_date', 'name', 'volume', 'unit', 'protein', 'fat', 'carbohydrate'])
+                    ->orderBy('food_id', 'asc')
+                    ->paginate(5);
 
         return view('stock_foods/index',[
             'stocks' => $stocks,
@@ -31,7 +35,9 @@ class StockFoodController extends Controller
         $today = date('Y-m-d');
 
         return view('stock_foods.create', [
-            'foods' => Food::all(),
+            'foods' => DB::table('foods')
+                    ->orderBy('category_id', 'asc')
+                    ->get(),
             'today' => $today,
             'stock_id' => $id
         ]);
