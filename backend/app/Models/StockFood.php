@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Food extends Model
+class StockFood extends Model
 {
-    protected $table = 'foods';
+    protected $table = 'stock_foods';
 
     public function getCreatedAtAttribute($date)
     {
@@ -20,14 +20,20 @@ class Food extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('m/d');
     }
 
-    public function category()
+    protected $dates = [
+        'register_date', 
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    public function food()
     {
-        return $this->belongsTo('App\Models\Category');
+        return $this->belongsTo('App\Models\Food');
     }
 
-    public function stock_foods()
+    public function stock()
     {
-        return $this->hasMany('App\Models\StockFood');
+        return $this->belongsTo('App\Models\Stock');
     }
-
 }
