@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
@@ -19,6 +21,20 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admins'])->name('dashboard');
+
+Route::middleware('auth:admins')->group(function () {
+
+    Route::get('/categories/{id}/foods',[FoodController::class, 'index'])->name('foods.index');
+
+    Route::get('/categories/create', [CategoryController::class, 'showCreateForm'])->name('categories.create');
+    Route::post('/categories/create', [CategoryController::class, 'create']);
+
+    Route::get('/categories/{id}/foods/create', [FoodController::class, 'showCreateForm'])->name('foods.create');
+    Route::post('/categories/{id}/foods/create', [FoodController::class, 'create']);
+
+    Route::get('/categories/{id}/foods/{food_id}/edit', [FoodController::class, 'showEditForm'])->name('foods.edit');
+    Route::post('/categories/{id}/foods/{food_id}/edit', [FoodController::class, 'edit']);
+});
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
     ->middleware('guest')

@@ -1,36 +1,50 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.admin.navigation')
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="container max-w-screen-xl mx-auto  p-5 mb-5">
+        <nav class="flex justify-between">
+            <div class="my-navbar-left">
+                @if(Auth::check())
+                <a href="{{ route('admin.foods.index', ['id' => Auth::user()->categories()->first()->id]) }}">
+                @else
+                <a href="{{ route('admin.welcome')  }}">
+                @endif
+                Stock</a>
+            </div>
+            <div class="my-navbar-right">
+                @if(Auth::check())
+                    <span class="my-navbar-item">{{ Auth::user()->name }}さん</span>
+                    ｜
+                    <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                    @csrf
+                    </form>
+                @else
+                    <a class="my-navbar-item" href="{{ route('admin.login') }}">ログイン</a>
+                @endif
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+@if(Auth::check())
+    <script>
+        document.getElementById('logout').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('logout-form').submit();
+        });
+    </script>
+@endif
+@yield('content')
+</main>
+@yield('script')
+</body>
 </html>

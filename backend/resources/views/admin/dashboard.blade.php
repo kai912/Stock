@@ -1,17 +1,16 @@
-<x-admin-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.admin.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
+@section('content')
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="justify-center grid grid-cols-3 gap-4">
+            <div class="bg-gray-100 col-start-2 shadow-lg rounded-lg">
+                <div class="py-4 text-center w-full border-b-2 border-gray-300 font-bold text-xl">分類を追加</div>
+                    <div class="py-4">
+                        <a href="{{ route('admin.categories.create') }}" class="my-10 px-2 py-2 border-b-2 border-gray-400 font-bold text-gray-500 hover:border-gray-500">
+                        分類を追加する
+                        </a>
+                    </div>
             </div>
         </div>
     </div>
-</x-admin-layout>
+@endsection
