@@ -1,9 +1,9 @@
 @extends('layouts.user.app')
 
 @section('content')
-<div class="container mx-auto max-w-screen-xl">
+<div class="container mx-auto max-w-screen-xl sm:px-10">
         <div class="justify-center grid sm:grid-cols-3">
-            <div class="col-start-2 shadow-lg rounded-lg">
+            <div class="sm:col-start-2 shadow-lg rounded-lg">
                 <div class="pl-4 bg-gray-50 bg-opacity-50 py-2 w-full border-b-2 border-gray-200 text-gray-400 font-bold lg:text-xl">食べ物を追加</div>
                 <div class="py-4">
                 @if($errors->any())
@@ -15,7 +15,7 @@
                     </ul>
                     </div>
                 @endif
-                    <form action="{{ route('user.stock_foods.create', ['id'=> $stock_id]) }}" method="post">
+                    <form action="{{ route('user.stock_foods.create', ['stock'=> $stock]) }}" method="post">
                         @csrf
                         <div class="form-group p-4 focus-within:text-gray-600">
                             <select name="food_id" id="food_id" class="placeholder-gray-300 shadow-inner border-gray-100 rounded-md w-full focus:outline-none focus:ring-0 focus:border-gray-300">

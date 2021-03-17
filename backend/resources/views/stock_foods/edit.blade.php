@@ -15,7 +15,7 @@
                     </ul>
                     </div>
                 @endif
-                    <form action="{{ route('user.stock_foods.edit', ['id'=> $stock_food->stock_id, 'stock_food_id'=>$stock_food->id, 'food_id'=>$stock_food->food_id]) }}" method="post">
+                    <form action="{{ route('user.stock_foods.edit', ['stock'=> $stock, 'stock_food'=>$stock_food, 'food_id'=>$stock_food->food_id]) }}" method="post">
                         @csrf
                         <div class="form-group p-4 focus-within:text-gray-600">
                             <select name="stock_id" id="stock_id" class="shadow-inner border-gray-100 rounded-md w-full focus:outline-none focus:ring-0 focus:border-gray-300">
