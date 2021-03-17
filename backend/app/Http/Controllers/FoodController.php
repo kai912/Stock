@@ -19,7 +19,7 @@ class FoodController extends Controller
 
         $current_category = category::find($id);
 
-        $foods = $current_category->foods()->get();
+        $foods = $current_category->foods()->paginate(15);
 
         return view('foods/index',[
             'categories' => $categories,

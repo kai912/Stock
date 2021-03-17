@@ -8,6 +8,7 @@ use App\Models\Stock;
 use App\Models\StockFood;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreateStockFood;
+use App\Http\Requests\EditStockFood;
 use Illuminate\Support\Facades\DB;
 
 class StockFoodController extends Controller
@@ -21,7 +22,7 @@ class StockFoodController extends Controller
                     ->leftJoin('foods', 'stock_foods.food_id', '=', 'foods.id')
                     ->select(['stock_foods.id as stock_food_id','food_id','count', 'register_date', 'name', 'volume', 'unit', 'protein', 'fat', 'carbohydrate'])
                     ->orderBy('food_id', 'asc')
-                    ->paginate(5);
+                    ->get();
 
         return view('stock_foods/index',[
             'stocks' => $stocks,
@@ -71,6 +72,52 @@ class StockFoodController extends Controller
         ]);
     }
 
+    public function showEditForm(int $id, int $stock_food_id){
+
+        $stock_food = StockFood::find($stock_food_id);
+        $stocks = Auth::user()->stocks()->get();
+
+        return view('stock_foods/edit', [
+            'stock_food' => $stock_food,
+            'stocks' => $stocks,
+        ]);
+    }
+
+    public function edit(int $id, int $stock_food_id, EditStockFood $request){
+
+        $stock_food = StockFood::find($stock_food_id);
+
+        if($stock_food->count <= $request->count) {
+            $stock_food->stock_id = $request->stock_id;
+            $stock_food->count = $request->count;
+            $stock_food->register_date = $request->register_date;
+
+            $stock_food->save();
+        } else {
+            $count = $stock_food->count - $request->count;
+
+            $stock_food->stock_id = $request->stock_id;
+            $stock_food->count = $request->count;
+            $stock_food->register_date = $request->register_date;
+
+            $stock_food->save();
+
+            $stock_food = new StockFood();
+
+            $stock_food->food_id = $request->food_id;
+            $stock_food->stock_id = $id;
+            $stock_food->count = $count;
+            $stock_food->register_date = $request->register_date;
+
+            $stock_food->save();
+        }
+
+
+        return redirect()->route('user.stock_foods.index', [
+            'id' => $stock_food->stock_id,
+        ]);
+    }
+
     public function gacha(int $id) {
 
         $current_stock = Stock::find($id);
@@ -81,7 +128,7 @@ class StockFoodController extends Controller
             'しゃぶしゃぶ'=>10,
             '回転寿司' => 15,
             '担々麺'=>20,
-            'ラーメン' => 50,
+            'カレー' => 50,
         ];
         
         $result_number = mt_rand(1, array_sum($weight_list));

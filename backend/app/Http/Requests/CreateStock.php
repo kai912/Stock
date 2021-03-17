@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateStockFood extends FormRequest
+class CreateStock extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,14 @@ class CreateStockFood extends FormRequest
     public function rules()
     {
         return [
-            'food_id' => 'required',
-            'count' => 'required|integer',
-            'register_date' => 'required|date|before_or_equal:today',
+            'name' => 'required|max: 20',
         ];
     }
 
     public function attributes()
     {
         return [
-            'count' => '数量',
-            'register_date' => '登録日'
+            'name' => '場所の名前',
         ];
     }
 }

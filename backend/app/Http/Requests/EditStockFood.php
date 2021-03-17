@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Food;
+use App\Models\StockFood;
 use Illuminate\Validation\Rule;
 
-class EditFood extends CreateFood
+class EditStockFood extends CreateStockFood
 {
     
     public function rules()
@@ -14,4 +14,6 @@ class EditFood extends CreateFood
 
         return $rule;
     }
+
+    
 }
