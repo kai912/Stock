@@ -2,59 +2,63 @@
 
 @section('content')
 
-    <div class="container mx-auto max-w-screen-xl md:px-10">
-        <div class="grid sm:grid-cols-3 gap-4 items-start">
+    <div class="container mx-auto max-w-screen-xl sm:px-10">
+        <div class="grid md:grid-cols-3 gap-4 items-start">
             <div class="pb-4 shadow-lg rounded-lg">
                 <nav>
-                    <div class="flex justify-between bg-gray-50 bg-opacity-50 w-full border-b-2 border-gray-200 text-gray-400 font-bold lg:text-xl">
-                        <div class="my-auto pl-4">場所</div>
+                    <div class="flex justify-between bg-gray-50 bg-opacity-50 w-full border-b-2 border-gray-200 text-gray-400 font-bold">
+                        <div class="my-auto pl-4 lg:text-xl">場所</div>
                         <div class="py-4">
                             <a href="{{ route('user.stocks.create') }}" class="my-10 px-4 mr-2 py-2 border-b-2 border-gray-200 hover:border-gray-500">
-                            場所を追加する
+                            場所の追加
                             </a>
                         </div>
                     </div>
                     <ul class="w-full mb-4">
                         @foreach($stocks as $stock)
-                        <li class="text-lg text-center border-b-4 border-double border-gray-300 mx-4 px-4"><a class="list-group-item {{ $current_stock_id === $stock->id ? 'active' : '' }}" href="{{ route('user.stock_foods.index', ['id' => $stock->id]) }}">
+                        <li class="text-lg text-center border-b-2  border-gray-300 mx-4 px-4 py-1 text-gray-400 {{ $current_stock_id === $stock->id ? 'text-gray-700 border-gray-700' : '' }}">
+                        <a class="" href="{{ route('user.stock_foods.index', ['id' => $stock->id]) }}">
                             {{ $stock->name }}
                         </a></li>
                         @endforeach
                     </ul>
                 </nav>
             </div>
-            <div class="justify-center bg-gray-100 bg-opacity-80 shadow-inner rounded-lg pb-4 px-10 sm:col-span-2">
-                <div class="flex justify-between mx-4">
-                    <a href="{{ route('user.stock_foods.gacha', ['id' => $current_stock_id]) }}" class="cursor-default font-bold text-xl my-auto">食べ物</a>
+            <div class="bg-gray-50 bg-opacity-50 shadow-inner rounded-lg pb-4 md:col-span-2">
+                <div class="flex justify-between text-gray-400 px-4 border-b-2 bg-white bg-opacity-50 mb-4">
+                    <a href="{{ route('user.stock_foods.gacha', ['id' => $current_stock_id]) }}" class="cursor-default font-bold my-auto lg:text-xl">食べ物</a>
                     <div class="py-4">
-                        <a href="{{ route('user.stock_foods.create', ['id' => $current_stock_id]) }}" class="my-10 px-4 py-2 border-b-2 border-gray-400 font-bold text-gray-500 hover:border-gray-500">
-                            食べ物を追加する
+                        <a href="{{ route('user.stock_foods.create', ['id' => $current_stock_id]) }}" class="px-4 py-2 border-b-2 border-gray-200 font-bold hover:border-gray-500">
+                            食べ物の追加
                         </a>
                     </div>
                 </div>
-                <div class="px-10  bg-gray-50 shadow-sm rounded-md py-4 ">
-                    <table class="table-fixed w-full mb-4">
-                        <thead class="text-lg border-b-4 border-double border-gray-300">
+                <div class="mx-4">
+                    <table class="w-full mb-4 text-gray-500">
+                        <thead class="text-lg border-b-4 border-double border-gray-500">
                         <tr>
-                        <th class="w-1/6">品名</a></th>
-                        <th class="w-1/6">量</th>
-                        <th class="w-1/12 hidden md:table-cell">P</th>
-                        <th class="w-1/12 hidden md:table-cell">F</th>
-                        <th class="w-1/12 hidden md:table-cell">C</th>
-                        <th class="w-1/6">登録日</a></th>
-                        <th class="w-1/6">削除</th>
-                        </tr>
+                        <th onclick="calcTotalPFC()">品名</a></th>
+                        <th>量</th>
+                        <th class="hidden sm:table-cell">P</th>
+                        <th class="hidden sm:table-cell">F</th>
+                        <th class="hidden sm:table-cell">C</th>
+                        <th>登録日</a></th>
+                        <th>編集</th>
+                        <th>削除</th>
                         </thead>
-                        <tbody class="text-lg text-center py-1">
+                        <tbody class="text-lg text-center">
                         @foreach($stock_foods as $stock_food)
-                            <tr class="whitespace-nowrap text-lg text-center border-t border-solid border-gray-300 border-opacity-60">
-                            <td class="w-1/6">{{ $stock_food->name }}</td>
-                            <td class="w-1/6">{{ $stock_food->volume * $stock_food->count }}{{ $stock_food->unit }}</td>
-                            <td class="w-1/12 hidden md:table-cell">{{ $stock_food->protein * $stock_food->count}}g</td>
-                            <td class="w-1/12 hidden md:table-cell">{{ $stock_food->fat * $stock_food->count}}g</td>
-                            <td class="w-1/12 hidden md:table-cell">{{ $stock_food->carbohydrate * $stock_food->count}}g</td>
-                            <td class="w-1/6">{{ $stock_food->register_date->format('m/d') }}</td>
-                            <td class="w-1/6">
+                            <tr class="whitespace-nowrap border-t border-solid border-gray-300 border-opacity-60">
+                            <td>{{ $stock_food->name }}</td>
+                            <td>{{ $stock_food->volume * $stock_food->count }}{{ $stock_food->unit }}</td>
+                            <td class="hidden sm:table-cell" name="protein">{{ $stock_food->protein * $stock_food->count }}</td>
+                            <td class="hidden sm:table-cell" name="fat">{{ $stock_food->fat * $stock_food->count }}</td>
+                            <td class="hidden sm:table-cell" name="carbohydrate">{{ $stock_food->carbohydrate * $stock_food->count }}</td>
+                            <td>{{ $stock_food->register_date->format('m/d') }}</td>
+                            <td>
+                                <a href="{{  route('user.stock_foods.edit', [ 'id' => $current_stock_id, 'stock_food_id' => $stock_food->stock_food_id])  }}"  class="mx-auto">編集</a>
+                            </td>
+                            <td>
                                 <form  action="{{ route('user.stock_foods.destroy', ['id'=>$stock->id, 'stock_food_id'=>$stock_food->stock_food_id]) }}" method="POST" onsubmit="return confirmFunctionDelete()" >
                                 @csrf
                                 @method('DELETE')
@@ -70,7 +74,6 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $stock_foods->links() }}
                 </div>
             </div>
         </div>
@@ -87,5 +90,29 @@ function confirmFunctionDelete() {
         return false;
     }
 }
+
+function calcTotalPFC() {
+
+    let ProteinList = document.getElementsByName("protein");
+    let FatList = document.getElementsByName("fat");
+    let CarbohydrateList = document.getElementsByName("carbohydrate");
+
+    let TotalProtein = 0;
+    let TotalFat = 0;
+    let TotalCarbohydrate = 0;
+
+    for (let i = 0; i < ProteinList.length; i++) {
+        let protein = Number(ProteinList[i].textContent);
+        let fat = Number(FatList[i].textContent);
+        let carbohydrate = Number(CarbohydrateList[i].textContent);
+
+        TotalProtein += protein;
+        TotalFat += fat;
+        TotalCarbohydrate += carbohydrate;
+    };
+
+    alert('P:' + TotalProtein + ' F:' + TotalFat + ' C:' + TotalCarbohydrate + 'です\n' + '総カロリーは' + Math.round(TotalProtein * 4 + TotalFat * 9 + TotalCarbohydrate * 4) + 'kcalです');
+}
+
 </script>
 @endsection

@@ -46,6 +46,9 @@ Route::middleware('auth:users')->group(function () {
 
     Route::get('/stocks/{id}/stock_foods/gacha', [StockFoodController::class, 'gacha'])->name('stock_foods.gacha');
 
+    Route::get('/stocks/{id}/stock_foods/{stock_food_id}/edit',[StockFoodController::class, 'showEditForm'])->name('stock_foods.edit');
+    Route::post('/stocks/{id}/stock_foods/{stock_food_id}/edit',[StockFoodController::class, 'edit']);
+
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
