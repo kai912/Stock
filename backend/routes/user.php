@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockFoodController;
+use App\Http\Controllers\ShoppingListController;
 
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\Auth\AuthenticatedSessionController;
@@ -49,6 +50,16 @@ Route::middleware('auth:users')->group(function () {
         Route::get('/stocks/{stock}/stock_foods/gacha', [StockFoodController::class, 'gacha'])->name('stock_foods.gacha');
 
     });
+
+    Route::get('/shopping_lists', [ShoppingListController::class, 'index'])->name('shopping_lists.index');
+
+    Route::get('/shopping_lists/create',[ShoppingListController::class, 'showCreateForm'])->name('shopping_lists.create');
+    Route::post('/shopping_lists/create',[ShoppingListController::class, 'create']);
+
+    Route::get('/shopping_lists/edit/{shopping_list}', [ShoppingListController::class, 'showEditForm'])->name('shopping_lists.edit');
+    Route::post('/shopping_lists/edit/{shopping_list}', [ShoppingListController::class, 'edit']);
+
+    Route::delete('/shopping_lists/{shopping_list}', [ShoppingListController::class, 'destroy'])->name('shopping_lists.destroy');
 
 });
 
