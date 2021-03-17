@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Stock');
     }
+
+    public function shopping_lists()
+    {
+        return $this->hasMany('App\Models\ShoppingList');
+    }
 }

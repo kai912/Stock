@@ -13,6 +13,8 @@
         <nav class="flex justify-between">
             <div class="my-navbar-left">
                 @if(Auth::check())
+                <a href="{{ route('user.shopping_lists.index') }}">買い物リスト</a>
+                |
                 <a href="{{ route('user.home') }}">
                 @else
                 <a href="{{ route('user.welcome')  }}">

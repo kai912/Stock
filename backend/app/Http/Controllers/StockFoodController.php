@@ -38,6 +38,7 @@ class StockFoodController extends Controller
         return view('stock_foods.create', [
             'foods' => DB::table('foods')
                     ->orderBy('category_id', 'asc')
+                    ->orderBy('id', 'asc')
                     ->get(),
             'today' => $today,
             'stock' => $stock
