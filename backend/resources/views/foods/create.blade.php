@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mx-auto max-w-screen-xl">
         <div class="justify-center grid sm:grid-cols-3">
-            <div class="col-start-2 shadow-lg rounded-lg">
+            <div class="sm:col-start-2 shadow-lg rounded-lg">
                 <div class="pl-4 bg-gray-50 bg-opacity-50 py-2 w-full border-b-2 border-gray-200 text-gray-400 font-bold lg:text-xl">食べ物を追加</div>
                 <div class="py-4">
                 @if($errors->any())

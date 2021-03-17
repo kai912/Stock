@@ -15,10 +15,10 @@
                         </div>
                     </div>
                     <ul class="w-full mb-4">
-                        @foreach($stocks as $stock)
-                        <li class="text-lg text-center border-b-2  border-gray-300 mx-4 px-4 py-1 text-gray-400 {{ $current_stock_id === $stock->id ? 'text-gray-700 border-gray-700' : '' }}">
-                        <a class="" href="{{ route('user.stock_foods.index', ['id' => $stock->id]) }}">
-                            {{ $stock->name }}
+                        @foreach($stocks as $Stock)
+                        <li class="text-lg text-center border-b-2  border-gray-300 mx-4 px-4 py-1 text-gray-400 {{ $current_stock_id === $Stock->id ? 'text-gray-700 border-gray-700' : '' }}">
+                        <a class="" href="{{ route('user.stock_foods.index', ['stock' => $Stock]) }}">
+                            {{ $Stock->name }}
                         </a></li>
                         @endforeach
                     </ul>
@@ -26,9 +26,9 @@
             </div>
             <div class="bg-gray-50 bg-opacity-50 shadow-inner rounded-lg pb-4 md:col-span-2">
                 <div class="flex justify-between text-gray-400 px-4 border-b-2 bg-white bg-opacity-50 mb-4">
-                    <a href="{{ route('user.stock_foods.gacha', ['id' => $current_stock_id]) }}" class="cursor-default font-bold my-auto lg:text-xl">食べ物</a>
+                    <a href="{{ route('user.stock_foods.gacha', ['stock' => $stock]) }}" class="cursor-default font-bold my-auto lg:text-xl">食べ物</a>
                     <div class="py-4">
-                        <a href="{{ route('user.stock_foods.create', ['id' => $current_stock_id]) }}" class="px-4 py-2 border-b-2 border-gray-200 font-bold hover:border-gray-500">
+                        <a href="{{ route('user.stock_foods.create', ['stock' => $stock]) }}" class="px-4 py-2 border-b-2 border-gray-200 font-bold hover:border-gray-500">
                             食べ物の追加
                         </a>
                     </div>
@@ -56,10 +56,10 @@
                             <td class="hidden sm:table-cell" name="carbohydrate">{{ $stock_food->carbohydrate * $stock_food->count }}</td>
                             <td>{{ $stock_food->register_date->format('m/d') }}</td>
                             <td>
-                                <a href="{{  route('user.stock_foods.edit', [ 'id' => $current_stock_id, 'stock_food_id' => $stock_food->stock_food_id])  }}"  class="mx-auto">編集</a>
+                                <a href="{{  route('user.stock_foods.edit', [ 'stock' => $stock, 'stock_food' => $stock_food])  }}"  class="mx-auto">編集</a>
                             </td>
                             <td>
-                                <form  action="{{ route('user.stock_foods.destroy', ['id'=>$stock->id, 'stock_food_id'=>$stock_food->stock_food_id]) }}" method="POST" onsubmit="return confirmFunctionDelete()" >
+                                <form  action="{{ route('user.stock_foods.destroy', ['stock'=>$stock, 'stock_food'=>$stock_food]) }}" method="POST" onsubmit="return confirmFunctionDelete()" >
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="my-auto shadow-inner  bg-opacity-60 rounded-sm">

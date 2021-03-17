@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockFoodController;
 
-use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\User\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\User\Auth\EmailVerificationNotificationController;
@@ -28,26 +28,27 @@ Route::get('/', function () {
     return view('user.welcome');
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('user.dashboard');
-})->middleware(['auth:users'])->name('dashboard');
-
 Route::middleware('auth:users')->group(function () {
-    
-    Route::get('/stocks/{id}/stock_foods', [StockFoodController::class, 'index'])->name('stock_foods.index');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
     Route::get('/stocks/create', [StockController::class, 'showCreateForm'])->name('stocks.create');
     Route::post('/stocks/create', [StockController::class, 'create']);
 
-    Route::get('/stocks/{id}/stock_foods/create',[StockFoodController::class, 'showCreateForm'])->name('stock_foods.create');
-    Route::post('/stocks/{id}/stock_foods/create',[StockFoodController::class, 'create']);
+    Route::middleware('can:view,stock')->group(function() {
 
-    Route::delete('/stocks/{id}/stock_foods/{stock_food_id}', [StockFoodController::class, 'destroy'])->name('stock_foods.destroy');
+        Route::get('/stocks/{stock}/stock_foods', [StockFoodController::class, 'index'])->name('stock_foods.index');
 
-    Route::get('/stocks/{id}/stock_foods/gacha', [StockFoodController::class, 'gacha'])->name('stock_foods.gacha');
+        Route::get('/stocks/{stock}/stock_foods/create',[StockFoodController::class, 'showCreateForm'])->name('stock_foods.create');
+        Route::post('/stocks/{stock}/stock_foods/create',[StockFoodController::class, 'create']);
 
-    Route::get('/stocks/{id}/stock_foods/{stock_food_id}/edit',[StockFoodController::class, 'showEditForm'])->name('stock_foods.edit');
-    Route::post('/stocks/{id}/stock_foods/{stock_food_id}/edit',[StockFoodController::class, 'edit']);
+        Route::get('/stocks/{stock}/stock_foods/{stock_food}/edit',[StockFoodController::class, 'showEditForm'])->name('stock_foods.edit');
+        Route::post('/stocks/{stock}/stock_foods/{stock_food}/edit',[StockFoodController::class, 'edit']);
+
+        Route::delete('/stocks/{stock}/stock_foods/{stock_food}', [StockFoodController::class, 'destroy'])->name('stock_foods.destroy');
+
+        Route::get('/stocks/{stock}/stock_foods/gacha', [StockFoodController::class, 'gacha'])->name('stock_foods.gacha');
+
+    });
 
 });
 

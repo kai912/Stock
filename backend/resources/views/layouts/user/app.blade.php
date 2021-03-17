@@ -13,7 +13,7 @@
         <nav class="flex justify-between">
             <div class="my-navbar-left">
                 @if(Auth::check())
-                <a href="{{ route('user.stock_foods.index', ['id' => Auth::user()->stocks()->first()->id]) }}">
+                <a href="{{ route('user.home') }}">
                 @else
                 <a href="{{ route('user.welcome')  }}">
                 @endif

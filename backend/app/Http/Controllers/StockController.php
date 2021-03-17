@@ -23,7 +23,7 @@ class StockController extends Controller
         Auth::user()->stocks()->save($stock);
 
         return redirect()->route('user.stock_foods.index', [
-            'id' => $stock->id,
+            'stock' => $stock,
         ]);
     }
 }
