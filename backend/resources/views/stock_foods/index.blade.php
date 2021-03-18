@@ -2,41 +2,38 @@
 
 @section('content')
 
-    <div class="container mx-auto max-w-screen-xl sm:px-10 px-4">
+    <div class="container mx-auto max-w-screen-xl px-4 sm:px-10">
         <div class="grid md:grid-cols-3 gap-4 items-start">
-            <div class="pb-4 shadow-lg rounded-lg">
-                <nav>
-                    <div class="flex justify-between bg-gray-50 bg-opacity-50 w-full border-b-2 border-gray-200 text-gray-400 font-bold">
-                        <div class="accordion-title my-auto pl-4 lg:text-xl cursor-pointer">場所<span class="active-stock hidden">:{{ $stock->name }}</span></div>
-                        <div class="py-4">
-                            <a href="{{ route('user.stocks.create') }}" class="my-10 px-4 mr-2 py-2 border-b-2 border-gray-200 hover:border-gray-500">
-                            場所の追加
-                            </a>
-                        </div>
-                    </div>
-                    <ul class="w-full mb-4 accordion-content">
-                        @foreach($stocks as $Stock)
-                        <li class="text-lg text-center border-b-2  border-gray-300 mx-4 px-4 py-1 text-gray-400 {{ $current_stock_id === $Stock->id ? 'text-gray-700 border-gray-700' : '' }}">
-                            <a class="" href="{{ route('user.stock_foods.index', ['stock' => $Stock]) }}">
-                            {{ $Stock->name }}
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </nav>
-            </div>
-            <div class="bg-gray-50 bg-opacity-50 shadow-inner rounded-lg pb-4 md:col-span-2">
-                <div class="flex justify-between text-gray-400 px-4 border-b-2 bg-white bg-opacity-50 mb-4">
-                    <a href="{{ route('user.stock_foods.gacha', ['stock' => $stock]) }}" class="cursor-default font-bold my-auto lg:text-xl">食べ物</a>
+            <nav class="pb-2 shadow-lg rounded-lg">
+                <div class="flex justify-between bg-gray-50 bg-opacity-50 w-full border-b-2 border-gray-200 text-gray-400 font-bold px-4 mb-2">
+                    <div class="accordion-title my-auto text-md sm:text-xl cursor-pointer">場所<span class="active-stock hidden">:{{ $stock->name }}</span></div>
                     <div class="py-4">
-                        <a href="{{ route('user.stock_foods.create', ['stock' => $stock]) }}" class="px-4 py-2 border-b-2 border-gray-200 font-bold hover:border-gray-500">
+                        <a href="{{ route('user.stocks.create') }}" class="px-2 sm:px-4 py-2 border-b-2 border-gray-200 hover:border-gray-500 text-sm sm:text-lg">
+                        場所の追加
+                        </a>
+                    </div>
+                </div>
+                <ul class="w-full mb-2 accordion-contents">
+                    @foreach($stocks as $Stock)
+                    <li class="mx-2 sm:mx-4 py-1 text-gray-400 text-sm sm:text-lg text-center border-b-2  border-gray-300 {{ $current_stock_id === $Stock->id ? 'text-gray-700 border-gray-700' : '' }}">
+                        <a href="{{ route('user.stock_foods.index', ['stock' => $Stock]) }}">{{ $Stock->name }}</a>
+                    </li>
+                    @endforeach
+                </ul>
+            </nav>
+
+            <div class="bg-gray-50 bg-opacity-50 shadow-inner rounded-lg md:col-span-2">
+                <div class="flex justify-between text-gray-400 px-4 border-b-2 bg-white bg-opacity-50 mb-2 sm:mb-4">
+                    <a href="{{ route('user.stock_foods.gacha', ['stock' => $stock]) }}" class="cursor-default font-bold my-auto text-md sm:text-xl">食べ物</a>
+                    <div class="py-4">
+                        <a href="{{ route('user.stock_foods.create', ['stock' => $stock]) }}" class="px-2 sm:px-4 py-2 border-b-2 border-gray-200 text-sm sm:text-lg font-bold hover:border-gray-500">
                             食べ物の追加
                         </a>
                     </div>
                 </div>
-                <div class="mx-4">
-                    <table class="w-full mb-4 text-gray-500">
-                        <thead class="text-lg border-b-4 border-double border-gray-500">
+                <div class="mx-2 sm:mx-4">
+                    <table class="sm:text-lg text-sm w-full mb-2 text-gray-500">
+                        <thead class="border-b-4 border-double border-gray-500">
                         <tr>
                         <th onclick="calcTotalPFC()">品名</a></th>
                         <th>量</th>
@@ -47,7 +44,7 @@
                         <th>編集</th>
                         <th>削除</th>
                         </thead>
-                        <tbody class="text-lg text-center">
+                        <tbody class="text-center">
                         @foreach($stock_foods as $stock_food)
                             <tr class="whitespace-nowrap border-t border-solid border-gray-300 border-opacity-60">
                             <td>{{ $stock_food->name }}</td>
@@ -83,10 +80,11 @@
 
 @section('script')
 <script type="text/javascript">
+
 document.addEventListener('DOMContentLoaded', () => {
     const accordionTitle = document.querySelector('.accordion-title');
     const activeStock = document.querySelector('.active-stock');
-    const accordionContents = document.querySelector('.accordion-content');
+    const accordionContents = document.querySelector('.accordion-contents');
 
     accordionTitle.addEventListener('click', (e) => {
         if(accordionContents.classList.contains('hidden')) {

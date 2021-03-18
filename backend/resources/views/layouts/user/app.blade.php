@@ -9,7 +9,7 @@
 </head>
 <body>
 <header>
-    <div class="container max-w-screen-xl mx-auto  p-5 mb-5">
+    <div class="container max-w-screen-xl mx-auto  p-5 mb-5 text-gray-600">
         <nav class="flex justify-between">
             <div class="my-navbar-left">
                 @if(Auth::check())
@@ -21,6 +21,7 @@
                 @endif
                 Stock</a>
             </div>
+
             <div class="my-navbar-right">
                 @if(Auth::check())
                     <div class="hidden sm:inline">
