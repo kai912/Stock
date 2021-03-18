@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container mx-auto max-w-screen-xl sm:px-10">
+    <div class="container mx-auto max-w-screen-xl sm:px-10 px-4">
         <div class="">
             <div class="bg-gray-50 bg-opacity-50 shadow-inner rounded-lg pb-4">
                 <div class="flex justify-between text-gray-400 px-4 border-b-2 bg-white bg-opacity-50 mb-4">
@@ -20,7 +20,7 @@
                         <th></th>
                         <th>品名</th>
                         <th>量</th>
-                        <th>優先度</th>
+                        <th class="hidden sm:table-cell">優先度</th>
                         <th>メモ</th>
                         <th>編集</th>
                         </tr>
@@ -28,10 +28,10 @@
                         <tbody class="text-lg text-center py-1" name="form1">
                         @foreach($shopping_lists as $shopping_list)
                             <tr class="whitespace-nowrap text-lg text-center border-t border-solid border-gray-300 border-opacity-60">
-                            <td><input type="checkbox" name="food_list" id="checkbox{{ $shopping_list->id }}" onclick="shoppingListCheck();"></td>
+                            <td><input class="rounded-md border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-300 focus:bg-gray-200 shadow-lg" type="checkbox" name="food_list" id="checkbox{{ $shopping_list->id }}" onclick="shoppingListCheck();"></td>
                             <td id="name{{ $shopping_list->id }}">{{ $shopping_list->food->name }}</td>
-                            <td>{{ $shopping_list->quantity }}</td>
-                            <td>{{ $shopping_list->priority }}</td>
+                            <td>{{ $shopping_list->quantity }}{{ $shopping_list->unit }}</td>
+                            <td class="hidden sm:table-cell">{{ $shopping_list->priority }}</td>
                             <td>{{ $shopping_list->memo }}</td>
                             <td class="flex">
                                 <a href="{{  route('user.shopping_lists.edit', [ 'shopping_list' => $shopping_list])  }}" id="edit{{ $shopping_list->id }}" class="mx-auto">編集</a>

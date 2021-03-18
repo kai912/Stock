@@ -2,7 +2,7 @@
 @extends('layouts.user.app')
 
 @section('content')
-    <div class="container mx-auto max-w-screen-xl sm:px-10">
+    <div class="container mx-auto max-w-screen-xl sm:px-10 px-4">
         <div class="my-40 ml-20">
             <div class="sm:text-6xl text-4xl leading-normal font-bold">
                 食材の管理、

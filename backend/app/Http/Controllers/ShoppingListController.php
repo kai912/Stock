@@ -18,6 +18,8 @@ class ShoppingListController extends Controller
     {
         $shopping_lists = Auth::user()
                 ->shopping_lists()
+                ->leftJoin('foods', 'shopping_lists.food_id', '=', 'foods.id')
+                ->select(['shopping_lists.*', 'foods.unit'])
                 ->orderBy('shopping_lists.priority', 'desc')
                 ->orderBy('shopping_lists.food_id', 'asc')
                 ->get();
