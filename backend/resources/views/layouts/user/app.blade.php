@@ -23,8 +23,10 @@
             </div>
             <div class="my-navbar-right">
                 @if(Auth::check())
+                    <div class="hidden sm:inline">
                     <span class="my-navbar-item"> {{ Auth::user()->name }}さん</span>
                     ｜
+                    </div>
                     <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
                     <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
                     @csrf

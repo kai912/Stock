@@ -2,24 +2,25 @@
 
 @section('content')
 
-    <div class="container mx-auto max-w-screen-xl sm:px-10">
+    <div class="container mx-auto max-w-screen-xl sm:px-10 px-4">
         <div class="grid md:grid-cols-3 gap-4 items-start">
             <div class="pb-4 shadow-lg rounded-lg">
                 <nav>
                     <div class="flex justify-between bg-gray-50 bg-opacity-50 w-full border-b-2 border-gray-200 text-gray-400 font-bold">
-                        <div class="my-auto pl-4 lg:text-xl">場所</div>
+                        <div class="accordion-title my-auto pl-4 lg:text-xl">場所</div>
                         <div class="py-4">
                             <a href="{{ route('user.stocks.create') }}" class="my-10 px-4 mr-2 py-2 border-b-2 border-gray-200 hover:border-gray-500">
                             場所の追加
                             </a>
                         </div>
                     </div>
-                    <ul class="w-full mb-4">
+                    <ul class="w-full mb-4 accordion-content">
                         @foreach($stocks as $Stock)
                         <li class="text-lg text-center border-b-2  border-gray-300 mx-4 px-4 py-1 text-gray-400 {{ $current_stock_id === $Stock->id ? 'text-gray-700 border-gray-700' : '' }}">
-                        <a class="" href="{{ route('user.stock_foods.index', ['stock' => $Stock]) }}">
+                            <a class="" href="{{ route('user.stock_foods.index', ['stock' => $Stock]) }}">
                             {{ $Stock->name }}
-                        </a></li>
+                            </a>
+                        </li>
                         @endforeach
                     </ul>
                 </nav>
@@ -82,8 +83,22 @@
 
 @section('script')
 <script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+    const accordionTitle = document.querySelector('.accordion-title');
+
+    const accordionContents = document.querySelector('.accordion-content');
+
+    accordionTitle.addEventListener('click', (e) => {
+        if(accordionContents.classList.contains('hidden')) {
+            accordionContents.classList.remove('hidden');
+        } else {
+            accordionContents.classList.add('hidden');
+        }
+    })
+})
+
 function confirmFunctionDelete() {
-    var checked = confirm('削除しますか？');
+    let checked = confirm('削除しますか？');
     if (checked) {
         return true;
     } else {
