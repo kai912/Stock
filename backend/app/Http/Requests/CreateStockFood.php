@@ -25,7 +25,7 @@ class CreateStockFood extends FormRequest
     {
         return [
             'food_id' => 'required',
-            'count' => 'required|integer',
+            'count' => 'numeric|regex:/\A\d{1,4}(\.\d{0,2})?\z/',
             'register_date' => 'required|date|before_or_equal:today',
         ];
     }

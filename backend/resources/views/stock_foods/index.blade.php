@@ -7,7 +7,7 @@
             <div class="pb-4 shadow-lg rounded-lg">
                 <nav>
                     <div class="flex justify-between bg-gray-50 bg-opacity-50 w-full border-b-2 border-gray-200 text-gray-400 font-bold">
-                        <div class="accordion-title my-auto pl-4 lg:text-xl">場所</div>
+                        <div class="accordion-title my-auto pl-4 lg:text-xl cursor-pointer">場所<span class="active-stock hidden">:{{ $stock->name }}</span></div>
                         <div class="py-4">
                             <a href="{{ route('user.stocks.create') }}" class="my-10 px-4 mr-2 py-2 border-b-2 border-gray-200 hover:border-gray-500">
                             場所の追加
@@ -85,14 +85,16 @@
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
     const accordionTitle = document.querySelector('.accordion-title');
-
+    const activeStock = document.querySelector('.active-stock');
     const accordionContents = document.querySelector('.accordion-content');
 
     accordionTitle.addEventListener('click', (e) => {
         if(accordionContents.classList.contains('hidden')) {
             accordionContents.classList.remove('hidden');
+            activeStock.classList.add('hidden');
         } else {
             accordionContents.classList.add('hidden');
+            activeStock.classList.remove('hidden');
         }
     })
 })
