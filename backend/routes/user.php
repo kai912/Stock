@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockFoodController;
 use App\Http\Controllers\ShoppingListController;
+use App\Http\Controllers\RecipeController;
 
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\Auth\AuthenticatedSessionController;
@@ -60,6 +61,12 @@ Route::middleware('auth:users')->group(function () {
     Route::post('/shopping_lists/edit/{shopping_list}', [ShoppingListController::class, 'edit']);
 
     Route::delete('/shopping_lists/{shopping_list}', [ShoppingListController::class, 'destroy'])->name('shopping_lists.destroy');
+
+    
+    Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
+
+    Route::get('/recipes/create',[RecipeController::class, 'showCreateForm'])->name('recipes.create');
+    Route::post('/recipes/create',[RecipeController::class, 'create']);
 
 });
 

@@ -30,4 +30,9 @@ class Food extends Model
         return $this->hasMany('App\Models\StockFood');
     }
 
+    public function recipes()
+    {
+        return $this->belongsToMany('App\Models\Recipe','recipe_foods')->withPivot('count');
+    }
+
 }

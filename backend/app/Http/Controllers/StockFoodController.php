@@ -19,7 +19,8 @@ class StockFoodController extends Controller
 
         $stock_foods = $stock->stock_foods()
                     ->leftJoin('foods', 'stock_foods.food_id', '=', 'foods.id')
-                    ->select(['stock_foods.id', 'stock_id', 'food_id', 'count', 'register_date', 'name', 'volume', 'unit', 'protein', 'fat', 'carbohydrate'])
+                    ->select(['stock_foods.id', 'stock_id', 'food_id', 'count', 'register_date', 'category_id',  'name', 'volume', 'unit', 'protein', 'fat', 'carbohydrate'])
+                    ->orderBy('category_id', 'asc')
                     ->orderBy('food_id', 'asc')
                     ->get();
 
