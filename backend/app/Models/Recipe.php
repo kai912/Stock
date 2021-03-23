@@ -11,4 +11,9 @@ class Recipe extends Model
     {
         return $this->belongsToMany('App\Models\Food', 'recipe_foods')->withPivot('count');
     }
+
+    public function recipe_foods()
+    {
+        return $this->hasMany('App\Models\RecipeFood');
+    }
 }

@@ -21,6 +21,19 @@
                         <li class="border-gray-300 border-opacity-60 align-middle">{{ $food->name }} {{ $food->pivot->count * $food->volume }}{{ $food->unit }}</li>
                         @endforeach
                     </ul>
+                    <a href="{{  route('user.recipes.edit', [ 'recipe' => $recipe])  }}" class="mx-auto">編集</a>
+                    <div>
+                    <form  action="{{ route('user.recipes.destroy', ['recipe'=>$recipe]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="my-auto shadow-inner  bg-opacity-60 rounded-sm">
+                                            <svg width="12px" height="12px" viewBox="0 0 12 12" >
+                                                <line x1="0" y1="12" x2="12" y2="0" stroke="black" stroke-width="2"/>
+                                                <line x1="0" y1="0" x2="12" y2="12" stroke="black" stroke-width="2"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                    </div>
                 @endforeach
                 </div>
             </div>

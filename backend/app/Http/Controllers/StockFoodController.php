@@ -35,14 +35,15 @@ class StockFoodController extends Controller
     public function showCreateForm(Stock $stock)
     {
         $today = date('Y-m-d');
+        $foods = DB::table('foods')
+                ->orderBy('category_id', 'asc')
+                ->orderBy('id', 'asc')
+                ->get();
 
         return view('stock_foods.create', [
-            'foods' => DB::table('foods')
-                    ->orderBy('category_id', 'asc')
-                    ->orderBy('id', 'asc')
-                    ->get(),
+            'foods' => $foods,
             'today' => $today,
-            'stock' => $stock
+            'stock' => $stock,
         ]);
     }
 

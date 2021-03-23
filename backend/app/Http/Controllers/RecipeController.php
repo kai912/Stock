@@ -60,30 +60,47 @@ class RecipeController extends Controller
 
         return redirect()->route('user.recipes.index');
     }
-/*
+
     public function showEditForm(Recipe $recipe)
     {
+        $foods = DB::table('foods')
+                ->orderBy('category_id', 'asc')
+                ->orderBy('id', 'asc')
+                ->get();
+
         return view('recipes.edit', [
             'recipe' => $recipe,
+            'foods' => $foods,
         ]);
     }
 
     public function edit(Recipe $recipe, EditRecipe $request)
     {
-        $recipe->quantity = $request->quantity;
-        $recipe->priority = $request->priority;
-        $recipe->memo = $request->memo;
-
+        $recipe->name = $request->name;
         $recipe->save();
+
+        $recipe_foods = $recipe->recipe_foods();
+
+        foreach($recipe_foods as $recipe_food) {
+            $id = $recipe_food->id;
+            $current_food_id = 'food_id' . $id;
+            $current_count = 'count' . $id;
+
+            $recipe_food->food_id = $request->$current_food_id;
+            $recipe_food->count = $request->$current_count;
+
+            $recipe_food->save();
+        }
 
         return redirect()->route('user.recipes.index');
     }
 
     public function destroy(Recipe $recipe) {
 
+        $recipe->recipe_foods()->delete();
         $recipe->delete();
 
         return redirect()->route('user.recipes.index');
     }
-    */
+    
 }

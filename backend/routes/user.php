@@ -68,6 +68,11 @@ Route::middleware('auth:users')->group(function () {
     Route::get('/recipes/create',[RecipeController::class, 'showCreateForm'])->name('recipes.create');
     Route::post('/recipes/create',[RecipeController::class, 'create']);
 
+    Route::get('/recipes/edit/{recipe}', [RecipeController::class, 'showEditForm'])->name('recipes.edit');
+    Route::post('/recipes/edit/{recipe}', [RecipeController::class, 'edit']);
+
+    Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
+
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])

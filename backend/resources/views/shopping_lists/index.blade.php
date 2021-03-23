@@ -27,15 +27,15 @@
                     <tbody class="text-center py-1" name="form1">
                         @foreach($shopping_lists as $shopping_list)
                         <tr class="whitespace-nowrap text-center border-t border-solid border-gray-300 border-opacity-60 align-middle">
-                            <td><input class="rounded-md border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-300 focus:bg-gray-200 shadow-lg shopping-list-checkbox" type="checkbox" name="food_list"></td>
-                            <td class="shopping-list-name">{{ $shopping_list->food->name }}</td>
+                            <td><input class="rounded-md border-gray-200 focus:outline-none focus:ring-0 focus:border-gray-300 focus:bg-gray-200 shadow-lg" type="checkbox" name="food_list" id="checkbox{{ $shopping_list->id }}" onclick="shoppingListCheck();"></td>
+                            <td id="name{{ $shopping_list->id }}">{{ $shopping_list->food->name }}</td>
                             <td>{{ $shopping_list->quantity }}{{ $shopping_list->unit }}</td>
                             <td class="hidden sm:table-cell">{{ $shopping_list->priority }}</td>
                             <td>{{ $shopping_list->memo }}</td>
                             <td class="flex">
-                                <a href="{{  route('user.shopping_lists.edit', [ 'shopping_list' => $shopping_list])  }}" class="mx-auto shopping-list-edit">編集</a>
+                                <a href="{{  route('user.shopping_lists.edit', [ 'shopping_list' => $shopping_list])  }}" id="edit{{ $shopping_list->id }}" class="mx-auto">編集</a>
 
-                                <div class="w-1/6 hidden mx-auto shopping-list-delete" >
+                                <div class="w-1/6 hidden mx-auto" id="delete{{ $shopping_list->id }}">
                                     <form  action="{{ route('user.shopping_lists.destroy', ['shopping_list'=>$shopping_list]) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -59,16 +59,12 @@
 
 @section('script')
 <script type="text/javascript">
-
-
 function shoppingListCheck() {
     
     @foreach($shopping_lists as $shopping_list)
-
     let foodListName{{ $shopping_list->id }} = document.getElementById('name{{ $shopping_list->id }}');
     let foodListDelete{{ $shopping_list->id }} = document.getElementById('delete{{ $shopping_list->id }}');
     let foodListEdit{{ $shopping_list->id }} = document.getElementById('edit{{ $shopping_list->id }}');
-
     if (document.getElementById('checkbox{{ $shopping_list->id }}').checked) {
         foodListName{{ $shopping_list->id }}.classList.add('line-through');
         foodListDelete{{ $shopping_list->id }}.classList.remove('hidden');
@@ -80,6 +76,5 @@ function shoppingListCheck() {
     }  
     @endforeach
 }
-
 </script>
 @endsection
